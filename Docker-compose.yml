@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  receiver:
+    build:
+      context: ./receiver
+      dockerfile: dockerfile
+    container_name: receiver
+    ports:
+      - "5000:5000"
+    networks:
+      - appnet
+
+  sender:
+    build:
+      context: ./sender
+      dockerfile: dockerfile
+    container_name: sender
+    depends_on:
+      - receiver
+    networks:
+      - appnet
+
+networks:
+  appnet:
